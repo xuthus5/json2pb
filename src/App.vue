@@ -6,23 +6,28 @@
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Fira Code', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+table {
+    width: 100%;
+    table-layout: fixed;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+th {
+    padding: 15px;
+    background: #375EAB;
+    text-align: center;
+    color: #FFF;
+    font-size: 20px;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+td {
+    width: 50%;
+    vertical-align: top;
 }
 </style>

@@ -8,9 +8,8 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.16.0",
-    "prismjs": "^1.21.0",
     "vue": "^2.6.11",
-    "vue-prism-component": "^1.2.0",
+    "vue-clipboard2": "^0.3.1",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
