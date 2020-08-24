@@ -61,13 +61,13 @@ ${this.parseObj(obj)}
         let typ = typeof obj[key];
         switch (typ) {
           case "number":
-            body += "int64 " + key + " = " + index + ";\n";
+            body += "\tint64 " + key + " = " + index + ";\n";
             break;
           case "boolean":
-            body += "bool " + key + " = " + index + ";\n";
+            body += "\tbool " + key + " = " + index + ";\n";
             break;
           case "string":
-            body += "string " + key + " = " + index + ";\n";
+            body += "\tstring " + key + " = " + index + ";\n";
             break;
           case "object":
             if (obj[key] instanceof Array) {
@@ -78,7 +78,7 @@ ${this.parseObj(obj)}
               console.log(item[0], typ);
               if (typ !== "object") {
                 body +=
-                  "repeated " +
+                  "\trepeated " +
                   this.getBaseType(typ) +
                   " " +
                   key +
@@ -87,20 +87,20 @@ ${this.parseObj(obj)}
                   ";\n";
               } else {
                 let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
-                body += `message ${newKey} {
-${this.parseObj(item[0])}
-}
-repeated ${newKey} ${key} = ${index};
+                body += `\tmessage ${newKey} {
+  ${this.parseObj(item[0])}
+\t}
+\trepeated ${newKey} ${key} = ${index};
                                     `;
               }
             } else {
               //是对象
               let item = obj[key];
               let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
-                body += `message ${newKey} {
+                body += `\tmessage ${newKey} {
 ${this.parseObj(item)}
-}
-repeated ${newKey} ${key} = ${index};
+\t}
+\trepeated ${newKey} ${key} = ${index};
                                     `;
             }
             break;
