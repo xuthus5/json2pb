@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Prism from 'vue-prism-component'
+import Prism from "vue-prism-component";
 export default {
   name: "Home",
   data() {
@@ -21,7 +21,7 @@ export default {
     };
   },
   components: {
-    Prism
+    Prism,
   },
   methods: {
     trans() {
@@ -95,6 +95,13 @@ repeated ${newKey} ${key} = ${index};
               }
             } else {
               //是对象
+              let item = obj[key];
+              let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
+                body += `message ${newKey} {
+${this.parseObj(item)}
+}
+repeated ${newKey} ${key} = ${index};
+                                    `;
             }
             break;
         }
