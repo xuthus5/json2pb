@@ -224,7 +224,7 @@ export default {
     },
     genTpl(obj) {
       return `message AutoGenerate {
-${this.parseObj(obj,1)}
+${this.parseObj(obj, 1)}
 }`;
     },
     parseObj(obj, level) {
@@ -247,26 +247,38 @@ ${this.parseObj(obj,1)}
               //isArray
               //base type in array item
               let item = obj[key];
-              let typ = typeof item[0];
-              if (typ !== "object") {
+              if (item.length === 0) {
                 body +=
                   "\t".times(level) +
                   "repeated " +
-                  this.getBaseType(typ) +
+                  this.uppercase(key) +
                   " " +
                   key +
                   " = " +
                   index +
                   ";\n";
               } else {
-                let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
-                body +=
-                  "\t".times(level) +
-                  `message ${newKey} {
+                let typ = typeof item[0];
+                if (typ !== "object") {
+                  body +=
+                    "\t".times(level) +
+                    "repeated " +
+                    this.getBaseType(typ) +
+                    " " +
+                    key +
+                    " = " +
+                    index +
+                    ";\n";
+                } else {
+                  let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
+                  body +=
+                    "\t".times(level) +
+                    `message ${newKey} {
 ${this.parseObj(item[0], level + 1)}
 ${"\t".times(level)}}
 ${"\t".times(level)}repeated ${newKey} ${key} = ${index};
 `;
+                }
               }
             } else {
               //isObject
@@ -297,7 +309,7 @@ ${"\t".times(level)}repeated ${realMessageKey} ${realDataKey} = ${index};
         }
       }
 
-      return body.substring(0,body.lastIndexOf('\n'))
+      return body.substring(0, body.lastIndexOf("\n"));
     },
     getBaseType(typ) {
       switch (typ) {
@@ -310,6 +322,12 @@ ${"\t".times(level)}repeated ${realMessageKey} ${realDataKey} = ${index};
         default:
           return "undefined";
       }
+    },
+    uppercase(str) {
+      return str.slice(0, 1).toUpperCase() + str.slice(1);
+    },
+    lowercase(str) {
+      return str.slice(0, 1).toLowerCase() + str.slice(1);
     },
   },
 };
