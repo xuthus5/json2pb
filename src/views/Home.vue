@@ -32,7 +32,7 @@
           <td style="width: 50%;">
             <span v-if="rawMess === ''">
               <b-card class="output" bg-variant="light" text-variant="dark">
-                <b-card-text>Protobuf Message will appear here.</b-card-text>
+                <b-card-text class="text-left mt-2 ml-3 text-secondary">Protobuf Message will appear here.</b-card-text>
               </b-card>
             </span>
             <span v-else>
@@ -64,7 +64,7 @@
               <a href="javascript:" @click="example">DataSet</a>.
             </p>
             <p>
-              © 2020
+              © {{new Date().getFullYear()}}
               <a href="https://xuthus.cc" target="_blank">Young Xu</a>
               •
               <a
@@ -74,8 +74,7 @@
             </p>
           </b-col>
         </b-row>
-      </b-container>© 2020 Young Xu
-      <br />You can find me on
+      </b-container>You can find me on
       <a href="https://github.com/xuthus5" target="_blank">GitHub</a>.
     </footer>
   </div>
@@ -358,5 +357,9 @@ ${"\t".times(level)}repeated ${realMessageKey} ${realDataKey} = ${index};
 }
 pre {
   margin-bottom: 0;
+}
+
+textarea {
+  tab-size: 4;
 }
 </style>
