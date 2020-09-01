@@ -208,6 +208,7 @@ export default {
 
       //convert json to protobuf message
       this.rawMess = this.genTpl(JSON.parse(this.rawJson));
+      this.$forceUpdate();
     },
     isJSON(str) {
       if (typeof str == "string") {
@@ -297,7 +298,7 @@ ${"\t".times(level)}repeated ${newKey} ${key} = ${index};
                 `message ${realMessageKey} {
 ${this.parseObj(item, level + 1)}
 ${"\t".times(level)}}
-${"\t".times(level)}repeated ${realMessageKey} ${realDataKey} = ${index};
+${"\t".times(level)}${realMessageKey} ${realDataKey} = ${index};
 `;
             }
             break;
