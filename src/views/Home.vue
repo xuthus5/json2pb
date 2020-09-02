@@ -234,7 +234,8 @@ ${this.parseObj(obj, 1)}
         let typ = typeof obj[key];
         switch (typ) {
           case "number":
-            body += "\t".times(level) + "int64 " + key + " = " + index + ";\n";
+            let fieldType = this.getFieldType(obj[key]);
+            body += "\t".times(level) + fieldType + ' ' + key + " = " + index + ";\n";
             break;
           case "boolean":
             body += "\t".times(level) + "bool " + key + " = " + index + ";\n";
@@ -329,6 +330,15 @@ ${"\t".times(level)}${realMessageKey} ${realDataKey} = ${index};
     lowercase(str) {
       return str.slice(0, 1).toLowerCase() + str.slice(1);
     },
+    getFieldType(num) {
+      if (num <= 0) {
+        if (num < - 2147483647 *2) return "int64";
+        return "int32";
+      }else{
+        if (num > 2147483647 *2) return "uint64";
+        return "uint32";
+      }
+    }
   },
 };
 </script>
