@@ -22,17 +22,23 @@
       <tbody>
         <tr>
           <td style="width: 50%;">
-            <textarea
-              class="form-control mb-2"
-              v-model="rawJson"
+            <codemirror
+              ref="cmEditor"
+              :value="rawJson"
+              :options="cmOptions"
+              @ready="onCmReady"
+              @focus="onCmFocus"
+              @input="onCmCodeChange"
+              class="input"
               placeholder="Paste JSON here"
-              rows="25"
-            ></textarea>
+            />
           </td>
           <td style="width: 50%;">
             <span v-if="rawMess === ''">
               <b-card class="output" bg-variant="light" text-variant="dark">
-                <b-card-text class="text-left mt-2 ml-3 text-secondary">Protobuf Message will appear here.</b-card-text>
+                <b-card-text
+                  class="text-left mt-2 ml-3 text-secondary"
+                >Protobuf Message will appear here.</b-card-text>
               </b-card>
             </span>
             <span v-else>
@@ -47,7 +53,7 @@
       </tbody>
     </table>
 
-    <button type="button" @click="trans" class="btn btn-primary">Convert</button>
+    <button type="button" @click="trans" class="btn btn-primary mt-3">Convert</button>
 
     <footer class="mt-5 mb-3">
       <b-container>
@@ -99,6 +105,15 @@ export default {
     return {
       rawJson: "",
       rawMess: "",
+      cmOptions: {
+        tabSize: 4,
+        mode: "text/json",
+        theme: "base16-light",
+        lineNumbers: true,
+        line: true,
+        highlightDifferences: true
+        // more CodeMirror options...
+      },
       expJson: `[
 \t{
 \t\t"input_index": 0,
@@ -199,6 +214,16 @@ export default {
     onError(e) {
       console.log("copy error:", e);
     },
+    onCmReady(cm) {
+      // console.log("the editor is readied!", cm);
+    },
+    onCmFocus(cm) {
+      // console.log("the editor is focused!", cm);
+    },
+    onCmCodeChange(newCode) {
+      // console.log("this is new code", newCode);
+      // this.code = newCode;
+    },
     trans() {
       let checkJson = this.isJSON(this.rawJson);
       if (!checkJson) {
@@ -235,7 +260,8 @@ ${this.parseObj(obj, 1)}
         switch (typ) {
           case "number":
             let fieldType = this.getFieldType(obj[key]);
-            body += "\t".times(level) + fieldType + ' ' + key + " = " + index + ";\n";
+            body +=
+              "\t".times(level) + fieldType + " " + key + " = " + index + ";\n";
             break;
           case "boolean":
             body += "\t".times(level) + "bool " + key + " = " + index + ";\n";
@@ -332,24 +358,45 @@ ${"\t".times(level)}${realMessageKey} ${realDataKey} = ${index};
     },
     getFieldType(num) {
       if (num <= 0) {
-        if (num < - 2147483647 *2) return "int64";
+        if (num < -2147483647 * 2) return "int64";
         return "int32";
-      }else{
-        if (num > 2147483647 *2) return "uint64";
+      } else {
+        if (num > 2147483647 * 2) return "uint64";
         return "uint32";
       }
-    }
+    },
+  },
+  computed: {
+    codemirror() {
+      return this.$refs.cmEditor.codemirror;
+    },
+  },
+  mounted() {
+    // console.log("the current CodeMirror instance object:", this.codemirror);
+    // you can use this.codemirror to do something...
   },
 };
 </script>
 
-<style scoped>
+<style>
 .copy {
   color: #ffffff;
 }
 
 .btn-grey {
   background: #80808099;
+}
+
+.input {
+  width: 100%;
+  height: 614px !important;
+}
+
+.CodeMirror {
+  width: 100%;
+  height: 614px !important;
+  text-align: left!important;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .output {
@@ -372,5 +419,11 @@ pre {
 
 textarea {
   tab-size: 4;
+  text-align: left;
+}
+
+.CodeMirror-scroll {
+  padding: 0;
+  margin: 0;
 }
 </style>

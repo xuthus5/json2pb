@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.16.0",
+    "codemirror": "^5.57.0",
     "highlight.js": "^9.11.0",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.1",
+    "vue-codemirror": "^4.0.6",
     "vue-highlight.js": "^3.1.0",
     "vue-router": "^3.2.0"
   },
