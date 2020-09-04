@@ -37,7 +37,7 @@
             <span v-if="rawMess === ''">
               <b-card class="output" bg-variant="light" text-variant="dark">
                 <b-card-text
-                  class="text-left mt-2 ml-3 text-secondary"
+                  class="text-left mt-2 ml-3 text-default-placeholder"
                 >Protobuf Message will appear here.</b-card-text>
               </b-card>
             </span>
@@ -111,7 +111,7 @@ export default {
         theme: "base16-light",
         lineNumbers: true,
         line: true,
-        highlightDifferences: true
+        highlightDifferences: true,
         // more CodeMirror options...
       },
       expJson: `[
@@ -222,7 +222,7 @@ export default {
     },
     onCmCodeChange(newCode) {
       // console.log("this is new code", newCode);
-      // this.code = newCode;
+      this.rawJson = newCode;
     },
     trans() {
       let checkJson = this.isJSON(this.rawJson);
@@ -395,8 +395,8 @@ ${"\t".times(level)}${realMessageKey} ${realDataKey} = ${index};
 .CodeMirror {
   width: 100%;
   height: 614px !important;
-  text-align: left!important;
-  font-family: 'Courier New', Courier, monospace;
+  text-align: left !important;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .output {
@@ -425,5 +425,10 @@ textarea {
 .CodeMirror-scroll {
   padding: 0;
   margin: 0;
+}
+
+.text-default-placeholder {
+  color: black;
+  font-family: "Courier New", Courier, monospace;
 }
 </style>

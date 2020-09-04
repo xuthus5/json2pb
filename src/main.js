@@ -21,6 +21,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'highlight.js/styles/default.css';
 
 require("codemirror/mode/javascript/javascript")
+require("codemirror/addon/display/placeholder")
 import "codemirror/theme/base16-light.css";
 
 Vue.use(BootstrapVue)
