@@ -107,8 +107,8 @@ export default {
       rawMess: "",
       cmOptions: {
         tabSize: 4,
-        mode: "text/json",
-        theme: "base16-light",
+        mode: {name: "javascript", json: true},
+        theme: "eclipse",
         lineNumbers: true,
         line: true,
         highlightDifferences: true,

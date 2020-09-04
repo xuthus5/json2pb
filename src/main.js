@@ -22,7 +22,7 @@ import 'highlight.js/styles/default.css';
 
 require("codemirror/mode/javascript/javascript")
 require("codemirror/addon/display/placeholder")
-import "codemirror/theme/base16-light.css";
+import "codemirror/theme/eclipse.css";
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
