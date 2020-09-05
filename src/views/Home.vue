@@ -107,7 +107,7 @@ export default {
       rawMess: "",
       cmOptions: {
         tabSize: 4,
-        mode: {name: "javascript", json: true},
+        mode: { name: "javascript", json: true },
         theme: "eclipse",
         lineNumbers: true,
         line: true,
@@ -230,6 +230,7 @@ export default {
         alert("It is not a json string!");
         return;
       }
+      // console.log(JSON.parse(this.rawJson));
 
       //convert json to protobuf message
       this.rawMess = this.genTpl(JSON.parse(this.rawJson));
@@ -285,6 +286,7 @@ ${this.parseObj(obj, 1)}
                   index +
                   ";\n";
               } else {
+                let _it = item[0];
                 let typ = typeof item[0];
                 if (typ !== "object") {
                   body +=
@@ -297,36 +299,50 @@ ${this.parseObj(obj, 1)}
                     index +
                     ";\n";
                 } else {
-                  let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
-                  body +=
-                    "\t".times(level) +
-                    `message ${newKey} {
+                  if (_it == null) {
+                    body += `${"\t".times(
+                      level
+                    )}google.protobuf.Any ${key} = ${index};
+`;
+                  } else {
+                    let newKey = key.slice(0, 1).toUpperCase() + key.slice(1);
+                    body +=
+                      "\t".times(level) +
+                      `message ${newKey} {
 ${this.parseObj(item[0], level + 1)}
 ${"\t".times(level)}}
 ${"\t".times(level)}repeated ${newKey} ${key} = ${index};
 `;
+                  }
                 }
               }
             } else {
               //isObject
               //when parent node is array ; then set default message name: data_index
-              let realMessageKey = key;
-              if (key == 0) realMessageKey = "Data_" + key;
+              if (obj[key] === null) {
+                body += `${"\t".times(
+                  level
+                )}google.protobuf.Any ${key} = ${index};
+`;
+              } else {
+                let realMessageKey = key;
+                if (key == 0) realMessageKey = "Data_" + key;
 
-              let item = obj[key];
-              realMessageKey =
-                realMessageKey.slice(0, 1).toUpperCase() +
-                realMessageKey.slice(1);
-              let realDataKey =
-                realMessageKey.slice(0, 1).toLowerCase() +
-                realMessageKey.slice(1);
-              body +=
-                "\t".times(level) +
-                `message ${realMessageKey} {
+                let item = obj[key];
+                realMessageKey =
+                  realMessageKey.slice(0, 1).toUpperCase() +
+                  realMessageKey.slice(1);
+                let realDataKey =
+                  realMessageKey.slice(0, 1).toLowerCase() +
+                  realMessageKey.slice(1);
+                body +=
+                  "\t".times(level) +
+                  `message ${realMessageKey} {
 ${this.parseObj(item, level + 1)}
 ${"\t".times(level)}}
 ${"\t".times(level)}${realMessageKey} ${realDataKey} = ${index};
 `;
+              }
             }
             break;
         }
