@@ -455,8 +455,13 @@ textarea {
   margin: 0;
 }
 
+.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
+  color: #777;
+  font-family: "Courier New", Courier, monospace;
+}
+
 .text-default-placeholder {
-  color: black;
+  color: #777;
   font-family: "Courier New", Courier, monospace;
 }
 </style>
