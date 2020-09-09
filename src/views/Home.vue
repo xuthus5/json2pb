@@ -464,4 +464,8 @@ textarea {
   color: #777;
   font-family: "Courier New", Courier, monospace;
 }
+
+.hljs {
+  background: rgb(248, 249, 250) !important;
+}
 </style>
